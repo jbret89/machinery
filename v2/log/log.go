@@ -5,7 +5,11 @@ import (
 )
 
 var (
-	logger = logging.New(nil, nil, new(logging.ColouredFormatter))
+	logger = logging.New(
+		nil,
+		nil,
+		logging.WithFormatter(new(logging.ColouredFormatter)),
+	)
 
 	// DEBUG ...
 	DEBUG = logger[logging.DEBUG]
@@ -18,6 +22,15 @@ var (
 	// FATAL ...
 	FATAL = logger[logging.FATAL]
 )
+
+// SetLogger sets custom loggers for all log levels
+func SetLogger(l logging.Logger) {
+	DEBUG = l[logging.DEBUG]
+	INFO = l[logging.INFO]
+	WARNING = l[logging.WARNING]
+	ERROR = l[logging.ERROR]
+	FATAL = l[logging.FATAL]
+}
 
 // Set sets a custom logger for all log levels
 func Set(l logging.LoggerInterface) {
